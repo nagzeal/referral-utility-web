@@ -1,24 +1,27 @@
 import React from "react";
-import Form from "./common/form";
+import { getStatuses } from "../services/populateRefService";
 import Joi from "joi-browser";
+import Form from "./common/form";
 import http from "./../services/referralService";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { getStatuses } from "../services/populateRefService";
 
-class AddReferral extends Form {
+class ReferralForm extends Form {
   state = {
-    statusAll: [],
     data: {
       state: "",
       line: "",
       company: "",
       referralCode: "",
       referralReason: "",
-      status: ""
+      status: [
+        { _id: "Select", name: "Select" },
+        { _id: "OFF", name: "Off" },
+        { _id: "ON", name: "On" }
+      ]
     },
-    errors: {}
+    errors: {},
+    allStatus: []
   };
 
   schema = {
@@ -47,44 +50,58 @@ class AddReferral extends Form {
   };
 
   componentDidMount() {
-    const statuses = getStatuses();
-    this.setState({ statusAll: statuses });
+    this.populateStatus();
+    this.populateReferral();
+  }
+
+  mapToViewModel(referral) {
+    return {
+      id: referral.id,
+      state: referral.state,
+      line: referral.line,
+      company: referral.company,
+      referralCode: referral.referralCode,
+      referralReason: referral.referralReason,
+      status: this.state.status
+    };
+  }
+
+  populateStatus() {
+    const allStatus = getStatuses();
+    this.setState({ allStatus });
   }
 
   doSubmit = async () => {
     const { data } = this.state;
     await http.post("http://localhost:8080/referral-service/createRef", data);
-    toast.success("Referral Added Successfully...");
+    toast.info("Referral Updated...");
   };
 
-  doReset() {
-    const emptyData = this.state.data;
-    emptyData.state = "";
-    emptyData.line = "";
-    emptyData.company = "";
-    emptyData.referralCode = "";
-    emptyData.referralReason = "";
-    this.setState({ data: emptyData });
+  async populateReferral() {
+    const refId = this.props.match.params.id;
+    const { data: myReferral } = await http.get(
+      "http://localhost:8080/referral-service/fetchReferral/" + refId
+    );
+    this.setState({ data: this.mapToViewModel(myReferral) });
   }
 
   render() {
     return (
       <React.Fragment>
         <ToastContainer />
-        <h1>Add New Referral</h1>
+        <h3>Update Referral Form</h3>
         <form onSubmit={this.handleSubmit}>
           {this.renderInput("state", "State")}
           {this.renderInput("line", "Line")}
           {this.renderInput("company", "Company")}
           {this.renderInput("referralCode", "Referral Code")}
           {this.renderInput("referralReason", "Reason")}
-          {this.renderSelect("status", "Status", this.state.statusAll)}
-          {this.renderSubmitButton("Submit")}
-          {this.renderResetButton("Reset")}
+          {this.renderSelect("status", "Status", this.state.allStatus)}
+          {this.renderSubmitButton("Save")}
         </form>
       </React.Fragment>
     );
   }
 }
 
-export default AddReferral;
+export default ReferralForm;

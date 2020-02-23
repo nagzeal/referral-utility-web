@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 
 class RemoveReferral extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
   render() {
-    return <h1>Remove Referral!</h1>;
+    return <div></div>;
   }
 }
 

@@ -15,12 +15,6 @@ const NavBar = () => {
           <NavLink className="nav-item nav-link" to="/viewRef">
             View Referral
           </NavLink>
-          <NavLink className="nav-item nav-link" to="/updateRef">
-            Update Referral
-          </NavLink>
-          <NavLink className="nav-item nav-link" to="/delRef">
-            Delete Referral
-          </NavLink>
           <NavLink className="nav-item nav-link" to="/audit">
             Audit Trail
           </NavLink>

@@ -1,9 +1,23 @@
 import React, { Component } from "react";
+import ReferralTable from "./referralTable";
+import { getAllReferral } from "./../services/populateRefService";
 
 class UpdateReferral extends Component {
-  state = {};
+  state = { allReferral: [] };
+
+  async componentDidMount() {
+    const { data: allReferral } = await getAllReferral();
+    this.setState({ allReferral });
+  }
   render() {
-    return <h1>Update Referral!</h1>;
+    const referral = this.state.allReferral;
+
+    return (
+      <React-Fragment>
+        <br></br>
+        <ReferralTable referral={referral}></ReferralTable>
+      </React-Fragment>
+    );
   }
 }
 
