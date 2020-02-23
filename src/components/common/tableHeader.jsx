@@ -2,11 +2,10 @@ import React, { Component } from "react";
 
 class TableHeader extends Component {
   render() {
-    const { columns } = this.props;
     return (
-      <thead>
+      <thead className="thead-dark">
         <tr>
-          {columns.map(column => (
+          {this.props.columns.map(column => (
             <th key={column.path || column.key}>{column.label}</th>
           ))}
         </tr>

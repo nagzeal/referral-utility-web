@@ -1,6 +1,6 @@
 import React from "react";
 
-const Select = ({ name, label, options, onChange }) => {
+const Select = ({ name, label, options, onChange, error }) => {
   return (
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
@@ -17,6 +17,7 @@ const Select = ({ name, label, options, onChange }) => {
           </option>
         ))}
       </select>
+      {error && <div className="alert alert-danger">{error}</div>}
     </div>
   );
 };

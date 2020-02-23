@@ -1,15 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
+import Form from "./form";
+import _ from "lodash";
 
-class TableBody extends Component {
+class TableBody extends Form {
   renderCell = (item, column) => {
     if (column.content) return column.content(item);
+    return _.get(item, column.path);
   };
+
   createKey = (item, column) => {
     return item.id + (column.path || column.key);
   };
   render() {
-    const { columns, data } = this.props;
-    console.log("Inside Table Body", data);
+    const { data, columns } = this.props;
     return (
       <tbody>
         {data.map(item => (
