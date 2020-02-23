@@ -33,8 +33,29 @@ export const status = [
   { _id: "ON", name: "On" }
 ];
 
+const allReferral = [
+  {
+    id: "5da1e077a3849b1b28e24798",
+    state: "IL",
+    line: "010",
+    company: "027",
+    referralCode: "EA430",
+    reason: "Reason 1",
+    status: [
+      { _id: "Select", name: "Select" },
+      { _id: "OFF", name: "Off" },
+      { _id: "ON", name: "On" }
+    ]
+  }
+];
+
 export function getAllReferral() {
-  return http.get("http://localhost:8080/getAllReferrals");
+  return http.get("http://localhost:8080/referral-service/getAllReferrals");
+  //return allReferral;
+}
+
+export function getReferral() {
+  return allReferral;
 }
 export function getAllState() {
   return states.filter(g => g);
