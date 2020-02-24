@@ -8,13 +8,6 @@ const Table = ({ columns, data }) => {
       <TableHeader columns={columns}></TableHeader>
       <TableBody columns={columns} data={data} />
     </table>
-
-    // <ReactDataGrid
-    //   columns={columns}
-    //   rowGetter={i => data[i]}
-    //   rowsCount={10}
-    //   minHeight={500}
-    // />
   );
 };
 
