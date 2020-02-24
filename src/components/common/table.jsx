@@ -1,7 +1,6 @@
 import React from "react";
 import TableHeader from "./tableHeader";
 import TableBody from "./tableBody";
-import ReactDataGrid from "react-data-grid";
 
 const Table = ({ columns, data }) => {
   return (
